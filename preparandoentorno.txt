@@ -1,0 +1,112 @@
+Iniciar el repositorio
+>git init
+
+Iniciar proyecto node.js
+>npm init -y
+
+Instalar React
+>npm install --save react react-dom
+
+Tener cuidado con los paquetes si tienen alguna vulnerabilidad
+
+Agregando compatibilidad con todos los navegadores usando Babel
+>npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react 
+
+Configuración de Babel (.babelrc):
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+}
+
+
+Instalación de Webpack y algunos plugins:
+>npm install webpack webpack-cli html-webpack-plugin html-loader  --save-dev
+
+Configuración de Webpack (webpack.config.js):
+
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader',
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: './index.html',
+    }),
+  ],
+};
+
+
+Instalación de Webpack Dev Server:
+>npm install webpack-dev-server --save-dev
+Script para ejecutar el servidor de Webpack y visualizar los cambios en tiempo real (package.json):
+
+{
+  "scripts": {
+    "build": "webpack --mode production",
+	"start": "webpack serve --open --mode development --env development "
+  },
+}
+
+Instalación de Sass:
+
+npm install mini-css-extract-plugin css-loader node-sass sass-loader --save-dev
+Configuración de Sass en Webpack (webpack.config.js):
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+// ...
+
+module: {
+  rules: [
+    {
+      test: /\.(s*)css$/,
+      use: [
+        { loader: MiniCssExtractPlugin.loader },
+        'css-loader',
+        'sass-loader',
+      ],
+    }, 
+  ],
+},
+
+// ...
+
+plugins: [
+  new MiniCssExtractPlugin({
+    filename: 'assets/[name].css',
+  }),
+],`
+
+
+Instalación de ESLint:
+>npm install eslint babel-eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y --save-dev
+
+Podemos configurar las reglas de ESLint en el archivo .eslintrc.
